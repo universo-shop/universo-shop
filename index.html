@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Universo Shop</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #172033;
+}
+
+/* CABEÇALHO */
+header {
+    background: #111827;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 3px 15px rgba(0,0,0,.2);
+}
+
+.topo {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.logo span {
+    color: #38bdf8;
+}
+
+.busca {
+    flex: 1;
+    display: flex;
+}
+
+.busca input {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    outline: none;
+    border-radius: 8px 0 0 8px;
+    font-size: 15px;
+}
+
+.busca button {
+    border: none;
+    padding: 0 18px;
+    background: #38bdf8;
+    cursor: pointer;
+    border-radius: 0 8px 8px 0;
+}
+
+.carrinho-btn {
+    background: white;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* CATEGORIAS */
+nav {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px 12px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+}
+
+nav button {
+    white-space: nowrap;
+    background: #1f2937;
+    color: white;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background: #38bdf8;
+    color: #082f49;
+}
+
+/* BANNER */
+.banner {
+    background: linear-gradient(120deg, #0f172a, #0369a1);
+    color: white;
+    padding: 70px 20px;
+}
+
+.banner-conteudo {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.banner h1 {
+    font-size: 43px;
+    max-width: 650px;
+    margin-bottom: 15px;
+}
+
+.banner p {
+    font-size: 18px;
+    max-width: 650px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.banner button {
+    background: #38bdf8;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* PRODUTOS */
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px 70px;
+}
+
+.titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.titulo h2 {
+    font-size: 28px;
+}
+
+.produtos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.produto {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,.08);
+    transition: .2s;
+}
+
+.produto:hover {
+    transform: translateY(-4px);
+}
+
+.imagem {
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,#e0f2fe,#dbeafe);
+    font-size: 70px;
+}
+
+.info {
+    padding: 16px;
+}
+
+.categoria {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.info h3 {
+    margin: 8px 0;
+    font-size: 17px;
+}
+
+.preco {
+    font-size: 21px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.comprar {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    background: #111827;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.comprar:hover {
+    background: #0284c7;
+}
+
+/* CARRINHO */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    z-index: 2000;
+    padding: 30px;
+}
+
+.carrinho {
+    background: white;
+    max-width: 550px;
+    width: 100%;
+    margin: auto;
+    padding: 25px;
+    border-radius: 14px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.fechar {
+    float: right;
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.remover {
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.total {
+    font-size: 21px;
+    margin: 20px 0;
+}
+
+.finalizar {
+    width: 100%;
+    background: #16a34a;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* WHATSAPP */
+.whatsapp {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #16a34a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 27px;
+    z-index: 1500;
+}
+
+/* RODAPÉ */
+footer {
+    background: #111827;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+/* CELULAR */
+@media(max-width: 900px) {
+    .produtos {
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+
+@media(max-width: 650px) {
+
+    .topo {
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        width: 100%;
+    }
+
+    .busca {
+        order: 3;
+        width: 100%;
+    }
+
+    .banner h1 {
+        font-size: 32px;
+    }
+
+    .produtos {
+        grid-template-columns: repeat(2,1fr);
+        gap: 12px;
+    }
+
+    .imagem {
+        height: 150px;
+        font-size: 55px;
+    }
+
+    .modal {
+        padding: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="topo">
+
+<div class="logo">
+🌎 Universo <span>Shop</span>
+</div>
+
+<div class="busca">
+<input
+type="text"
+id="pesquisa"
+placeholder="Buscar produtos..."
+oninput="mostrarProdutos()"
+>
+<button>🔎</button>
+</div>
+
+<button class="carrinho-btn" onclick="abrirCarrinho()">
+🛒 Carrinho (<span id="quantidade">0</span>)
+</button>
+
+</div>
+
+<nav>
+
+<button onclick="filtrar('Todos')">Todos</button>
+
+<button onclick="filtrar('Eletrônicos')">
+📱 Eletrônicos
+</button>
+
+<button onclick="filtrar('Games')">
+🎮 Games
+</button>
+
+<button onclick="filtrar('Moda')">
+👕 Moda
+</button>
+
+<button onclick="filtrar('Casa')">
+🏠 Casa
+</button>
+
+<button onclick="filtrar('Automotivo')">
+🚗 Automotivo
+</button>
+
+<button onclick="filtrar('Acessórios')">
+🎒 Acessórios
+</button>
+
+<button onclick="filtrar('Ofertas')">
+🔥 Ofertas
+</button>
+
+</nav>
+
+</header>
+
+
+<section class="banner">
+
+<div class="banner-conteudo">
+
+<h1>
+Tudo o que você procura em um só lugar.
+</h1>
+
+<p>
+Bem-vindo à Universo Shop! Encontre eletrônicos,
+games, roupas, produtos para casa, acessórios
+e muito mais.
+</p>
+
+<button onclick="irProdutos()">
+🛍️ Ver produtos
+</button>
+
+</div>
+
+</section>
+
+
+<main id="areaProdutos">
+
+<div class="titulo">
+
+<h2>
+🛍️ Produtos
+</h2>
+
+<span id="resultado"></span>
+
+</div>
+
+<div
+id="produtos"
+class="produtos">
+</div>
+
+</main>
+
+
+<!-- CARRINHO -->
+
+<div
+id="modal"
+class="modal"
+onclick="fecharFora(event)"
+>
+
+<div class="carrinho">
+
+<button
+class="fechar"
+onclick="fecharCarrinho()">
+✕
+</button>
+
+<h2>🛒 Seu carrinho</h2>
+
+<br>
+
+<div id="listaCarrinho">
+</div>
+
+<div class="total">
+
+Total:
+<strong id="total">
+R$ 0,00
+</strong>
+
+</div>
+
+<button
+class="finalizar"
+onclick="finalizarPedido()"
+>
+📲 Finalizar pedido pelo WhatsApp
+</button>
+
+</div>
+
+</div>
+
+
+<a
+class="whatsapp"
+href="https://wa.me/5500000000000"
+target="_blank"
+>
+💬
+</a>
+
+
+<footer>
+
+<p>
+🌎 <strong>Universo Shop</strong>
+</p>
+
+<br>
+
+<p>
+Tudo o que você procura em um só lugar.
+</p>
+
+<br>
+
+<p>
+© 2026 Universo Shop
+</p>
+
+</footer>
+
+
+<script>
+
+const produtos = [
+
+{
+nome:"Fone Bluetooth",
+categoria:"Eletrônicos",
+preco:49.90,
+icone:"🎧"
+},
+
+{
+nome:"Headset Gamer",
+categoria:"Games",
+preco:99.90,
+icone:"🎮"
+},
+
+{
+nome:"Caixa de Som Bluetooth",
+categoria:"Eletrônicos",
+preco:79.90,
+icone:"🔊"
+},
+
+{
+nome:"Smartwatch",
+categoria:"Eletrônicos",
+preco:129.90,
+icone:"⌚"
+},
+
+{
+nome:"Suporte para Celular",
+categoria:"Eletrônicos",
+preco:29.90,
+icone:"📱"
+},
+
+{
+nome:"Carregador Rápido",
+categoria:"Eletrônicos",
+preco:39.90,
+icone:"🔌"
+},
+
+{
+nome:"Cabo USB-C",
+categoria:"Eletrônicos",
+preco:19.90,
+icone:"🔗"
+},
+
+{
+nome:"Mouse Gamer",
+categoria:"Games",
+preco:59.90,
+icone:"🖱️"
+},
+
+{
+nome:"Teclado Gamer",
+categoria:"Games",
+preco:89.90,
+icone:"⌨️"
+},
+
+{
+nome:"Mousepad Gamer",
+categoria:"Games",
+preco:39.90,
+icone:"🖥️"
+},
+
+{
+nome:"Controle Gamer",
+categoria:"Games",
+preco:99.90,
+icone:"🎮"
+},
+
+{
+nome:"Suporte para Headset",
+categoria:"Games",
+preco:49.90,
+icone:"🎧"
+},
+
+{
+nome:"Camiseta",
+categoria:"Moda",
+preco:49.90,
+icone:"👕"
+},
+
+{
+nome:"Moletom",
+categoria:"Moda",
+preco:99.90,
+icone:"🧥"
+},
+
+{
+nome:"Boné",
+categoria:"Moda",
+preco:39.90,
+icone:"🧢"
+},
+
+{
+nome:"Shorts",
+categoria:"Moda",
+preco:59.90,
+icone:"🩳"
+},
+
+{
+nome:"Organizador Multiuso",
+categoria:"Casa",
+preco:34.90,
+icone:"📦"
+},
+
+{
+nome:"Luminária LED",
+categoria:"Casa",
+preco:59.90,
+icone:"💡"
+},
+
+{
+nome:"Kit Utensílios de Cozinha",
+categoria:"Casa",
+preco:69.90,
+icone:"🍳"
+},
+
+{
+nome:"Garrafa Térmica",
+categoria:"Casa",
+preco:49.90,
+icone:"🧴"
+},
+
+{
+nome:"Suporte Veicular",
+categoria:"Automotivo",
+preco:39.90,
+icone:"🚗"
+},
+
+{
+nome:"Carregador Veicular",
+categoria:"Automotivo",
+preco:44.90,
+icone:"🔋"
+},
+
+{
+nome:"Organizador Automotivo",
+categoria:"Automotivo",
+preco:54.90,
+icone:"🚙"
+},
+
+{
+nome:"Acessório para Moto",
+categoria:"Automotivo",
+preco:49.90,
+icone:"🏍️"
+},
+
+{
+nome:"Mochila",
+categoria:"Acessórios",
+preco:89.90,
+icone:"🎒"
+},
+
+{
+nome:"Carteira",
+categoria:"Acessórios",
+preco:39.90,
+icone:"👛"
+},
+
+{
+nome:"Óculos de Sol",
+categoria:"Acessórios",
+preco:59.90,
+icone:"🕶️"
+},
+
+{
+nome:"Relógio",
+categoria:"Acessórios",
+preco:79.90,
+icone:"⌚"
+},
+
+{
+nome:"Kit de Acessórios",
+categoria:"Acessórios",
+preco:69.90,
+icone:"🎁"
+},
+
+{
+nome:"Produto Surpresa",
+categoria:"Ofertas",
+preco:39.90,
+icone:"🎉"
+}
+
+];
+
+
+let categoriaAtual = "Todos";
+
+let carrinho = [];
+
+
+function dinheiro(valor) {
+
+return valor.toLocaleString(
+"pt-BR",
+{
+style:"currency",
+currency:"BRL"
+}
+);
+
+}
+
+
+function mostrarProdutos() {
+
+const pesquisa =
+document.getElementById("pesquisa")
+.value
+.toLowerCase();
+
+const lista =
+produtos.filter(produto => {
+
+const categoria =
+categoriaAtual === "Todos"
+||
+produto.categoria === categoriaAtual;
+
+const nome =
+produto.nome
+.toLowerCase()
+.includes(pesquisa);
+
+return categoria && nome;
+
+});
+
+
+const area =
+document.getElementById("produtos");
+
+
+area.innerHTML = "";
+
+
+document.getElementById("resultado")
+.innerText =
+lista.length + " produto(s)";
+
+
+lista.forEach(produto => {
+
+const indice =
+produtos.indexOf(produto);
+
+
+area.innerHTML += `
+
+<div class="produto">
+
+<div class="imagem">
+${produto.icone}
+</div>
+
+<div class="info">
+
+<div class="categoria">
+${produto.categoria}
+</div>
+
+<h3>
+${produto.nome}
+</h3>
+
+<div class="preco">
+${dinheiro(produto.preco)}
+</div>
+
+<button
+class="comprar"
+onclick="adicionar(${indice})"
+>
+🛒 Adicionar ao carrinho
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function filtrar(categoria) {
+
+categoriaAtual = categoria;
+
+mostrarProdutos();
+
+document
+.getElementById("areaProdutos")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+function adicionar(indice) {
+
+carrinho.push(indice);
+
+atualizarQuantidade();
+
+alert(
+produtos[indice].nome +
+" foi adicionado ao carrinho!"
+);
+
+}
+
+
+function atualizarQuantidade() {
+
+document.getElementById("quantidade")
+.innerText =
+carrinho.length;
+
+}
+
+
+function abrirCarrinho() {
+
+document.getElementById("modal")
+.style.display = "flex";
+
+mostrarCarrinho();
+
+}
+
+
+function fecharCarrinho() {
+
+document.getElementById("modal")
+.style.display = "none";
+
+}
+
+
+function fecharFora(event) {
+
+if(event.target.id === "modal") {
+
+fecharCarrinho();
+
+}
+
+}
+
+
+function mostrarCarrinho() {
+
+const lista =
+document.getElementById("listaCarrinho");
+
+
+if(carrinho.length === 0) {
+
+lista.innerHTML =
+"<p>Seu carrinho está vazio.</p>";
+
+document.getElementById("total")
+.innerText =
+"R$ 0,00";
+
+return;
+
+}
+
+
+let total = 0;
+
+lista.innerHTML = "";
+
+
+carrinho.forEach((indice,posicao) => {
+
+const produto =
+produtos[indice];
+
+total += produto.preco;
+
+
+lista.innerHTML += `
+
+<div class="item">
+
+<div>
+
+<strong>
+${produto.icone}
+${produto.nome}
+</strong>
+
+<br>
+
+<span>
+${dinheiro(produto.preco)}
+</span>
+
+</div>
+
+<button
+class="remover"
+onclick="remover(${posicao})"
+>
+Remover
+</button>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("total")
+.innerText =
+dinheiro(total);
+
+}
+
+
+function remover(posicao) {
+
+carrinho.splice(posicao,1);
+
+atualizarQuantidade();
+
+mostrarCarrinho();
+
+}
+
+
+function finalizarPedido() {
+
+if(carrinho.length === 0) {
+
+alert(
+"Seu carrinho está vazio."
+);
+
+return;
+
+}
+
+
+let mensagem =
+"Olá! Quero fazer um pedido na Universo Shop:%0A%0A";
+
+
+let total = 0;
+
+
+carrinho.forEach(indice => {
+
+const produto =
+produtos[indice];
+
+mensagem +=
+"🛍️ " +
+produto.nome +
+" - " +
+dinheiro(produto.preco) +
+"%0A";
+
+total += produto.preco;
+
+});
+
+
+mensagem +=
+"%0A💰 Total: " +
+dinheiro(total);
+
+
+const telefone =
+"5500000000000";
+
+
+window.open(
+"https://wa.me/" +
+telefone +
+"?text=" +
+mensagem,
+"_blank"
+);
+
+}
+
+
+function irProdutos() {
+
+document
+.getElementById("areaProdutos")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+mostrarProdutos();
+
+</script>
+
+</body>
+</html>
