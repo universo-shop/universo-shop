@@ -775,8 +775,7 @@ const lista =
 produtos.filter(produto => {
 
 const categoria =
-categoriaAtual === "Todos"
-||
+categoriaAtual === "Todos" ||
 produto.categoria === categoriaAtual;
 
 const nome =
@@ -788,32 +787,35 @@ return categoria && nome;
 
 });
 
-
 const area =
 document.getElementById("produtos");
 
-
 area.innerHTML = "";
-
 
 document.getElementById("resultado")
 .innerText =
 lista.length + " produto(s)";
-
 
 lista.forEach(produto => {
 
 const indice =
 produtos.indexOf(produto);
 
-
 area.innerHTML += `
 
 <div class="produto">
 
 <div class="imagem">
-${produto.icone}
+${
+produto.imagem
+?
+`<img src="${produto.imagem}" alt="${produto.nome}" style="width:100%;height:100%;object-fit:contain;">`
+:
+produto.icone
+}
 </div>
+
+<div class="info">
 
 <div class="categoria">
 ${produto.categoria}
@@ -843,9 +845,6 @@ onclick="adicionar(${indice})"
 });
 
 }
-
-
-function filtrar(categoria) {
 
 categoriaAtual = categoria;
 
